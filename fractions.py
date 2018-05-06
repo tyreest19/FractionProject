@@ -1,4 +1,5 @@
 class Fraction:
+	""" Object that represents a fraction"""
 	
 	def __init__(self, numerator, denominator):
 		"""
@@ -8,9 +9,12 @@ class Fraction:
 		"""
 		self.numerator = numerator
 		self.denominator = denominator
+	
 	def __repr__(self):
-		if self.numerator == 1 and self.denominator == 1:
+		if self.numerator == self.denominator:
 			return "1"
+		if self.numerator % self.denominator == 0:
+			return str(self.numerator//self.denominator)
 		return "{numerator}/{denominator}".format(
 						numerator=self.numerator, denominator=self.denominator
 						)				
