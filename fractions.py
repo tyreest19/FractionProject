@@ -64,20 +64,28 @@ def parseInput(fraction):
 		return:
 			tuple containing the numerator and denominator 
 	"""
-	fraction = fraction.split('/')
-	numerator = int(fraction[0])
-	denominator = int(fraction[1])
-	return numerator, denominator
+	if fraction[0] == '/':
+		fraction = fraction.split('/')
+		numerator = int(fraction[0])
+		denominator = int(fraction[1])
+		return numerator, denominator, 0
+	if fraction[0].isdigit():
+		wholeNumber = int(fraction[0])
+		fraction = fraction[2:].split('/')
+		numerator = int(fraction[0])
+		denominator = fraction[1]
+		denominator = int(denominator[:len(denominator) - 1])
+		return numerator, denominator, wholeNumber
 
 def main():
 	continueProgram = True
 	while continueProgram:
 		userInputFraction1 = input('Enter two fractions:\n>>')
-		numerator, denominator = parseInput(userInputFraction1)
-		fraction1 = Fraction(numerator, denominator)
+		numerator, denominator, wholeNumber = parseInput(userInputFraction1)
+		fraction1 = Fraction(numerator, denominator, wholeNumber=wholeNumber)
 		userInputFraction2 = input('>>')
-		numerator, denominator = parseInput(userInputFraction2)
-		fraction2 = Fraction(numerator, denominator)
+		numerator, denominator, wholeNumber = parseInput(userInputFraction2)
+		fraction2 = Fraction(numerator, denominator, wholeNumber=wholeNumber)
 		print('The sum of', fraction1, 'and', fraction2, 'is', fraction1 + fraction2)
 
 if __name__ == '__main__':
