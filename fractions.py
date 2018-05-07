@@ -64,7 +64,7 @@ def parseInput(fraction):
 		return:
 			tuple containing the numerator and denominator 
 	"""
-	if fraction[0] == '/':
+	if fraction[1] == '/':
 		fraction = fraction.split('/')
 		numerator = int(fraction[0])
 		denominator = int(fraction[1])
