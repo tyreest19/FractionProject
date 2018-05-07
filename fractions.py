@@ -1,7 +1,7 @@
 class Fraction:
 	""" Object that represents a fraction"""
 	
-	def __init__(self, numerator, denominator):
+	def __init__(self, numerator, denominator, wholeNumber=0):
 		"""
 			Arguements:
 				numerator: interger that is the numerator
@@ -9,12 +9,17 @@ class Fraction:
 		"""
 		self.numerator = numerator
 		self.denominator = denominator
+		self.wholeNumber = wholeNumber
 	
 	def __repr__(self):
 		if self.numerator == self.denominator:
 			return "1"
 		if self.numerator % self.denominator == 0:
 			return str(self.numerator//self.denominator)
+		if self.wholeNumber > 0:
+			return str(self.wholeNumber) + "({numerator}/{denominator})".format(
+						numerator=self.numerator, denominator=self.denominator
+						)	
 		return "{numerator}/{denominator}".format(
 						numerator=self.numerator, denominator=self.denominator
 						)				
@@ -31,8 +36,8 @@ class Fraction:
 				self.denominator)
 			newFraction.simplify()
 			return newFraction
-		newNumerator = self.numerator * y.denominator
-		newNumerator += y.numerator * self.denominator 
+		newNumerator = (self.numerator + (self.wholeNumber * self.denominator)) * y.denominator
+		newNumerator += (y.numerator + (y.wholeNumber * y.denominator)) * self.denominator 
 		newDenominator = self.denominator * y.denominator
 		newFraction = Fraction(newNumerator, newDenominator)
 		newFraction.simplify()
@@ -48,6 +53,9 @@ class Fraction:
 					self.numerator //= i
 					self.denominator //= i
 					reduce = True
+		if self.numerator > self.denominator:
+			self.wholeNumber = self.numerator // self.denominator
+			self.numerator = self.numerator % self.denominator
 					
 def parseInput(fraction):
 	"""
@@ -64,10 +72,10 @@ def parseInput(fraction):
 def main():
 	continueProgram = True
 	while continueProgram:
-		userInputFraction1 = input('Enter two fractions:\n')
+		userInputFraction1 = input('Enter two fractions:\n>>')
 		numerator, denominator = parseInput(userInputFraction1)
 		fraction1 = Fraction(numerator, denominator)
-		userInputFraction2 = input()
+		userInputFraction2 = input('>>')
 		numerator, denominator = parseInput(userInputFraction2)
 		fraction2 = Fraction(numerator, denominator)
 		print('The sum of', fraction1, 'and', fraction2, 'is', fraction1 + fraction2)
